@@ -1,13 +1,13 @@
 *** Settings ***
 Library           Selenium2Library
-Resource          1-1功能关键字.robot
+Resource          A功能关键字.robot
 
 *** Test Cases ***
 管理员登录
     登录流程验证    管理员    admin
 
 报关企业登录
-    登录流程验证    报关企业    congcong
+    登录流程验证    报关企业    lb_kf
 
 经营单位登录
     登录流程验证    经营单位    T0001

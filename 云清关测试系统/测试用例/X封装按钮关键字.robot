@@ -23,9 +23,9 @@ Library           Selenium2Library
     \    ${menuName}    Get Text    ${menuElement}
     \    Set To Dictionary    ${menuDict}    ${menuName}=${menuElement}
     ${printElements}    Get WebelementS    Xpath=//select[@id='printcd']/option
-    :FOR    ${printElement}    IN    @{printElements}
+    : FOR    ${printElement}    IN    @{printElements}
     \    ${printName}    Get Text    ${printElement}
-    \    Set To Dictionary    ${menuDict}     ${printName}=${printElement}
+    \    Set To Dictionary    ${menuDict}    ${printName}=${printElement}
     #Log Dictionary    ${menuDict}
     ${buttonEle}    Get From Dictionary    ${menuDict}    ${buttonName}
     [Return]    ${buttonEle}

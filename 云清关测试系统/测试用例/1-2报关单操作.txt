@@ -1,11 +1,7 @@
 *** Settings ***
-Resource          1-1功能关键字.robot
-Resource          1-2报关单页面关键字.robot
+Resource          A功能关键字.robot
+Resource          B报关单页面关键字.robot
 
 *** Test Cases ***
 新增报关单
     报关单新增验证
-
-case
-    #${d}    Create Dictionary    a=1    b=2
-    ${dd}    Create Dictionary    a    1    b    2

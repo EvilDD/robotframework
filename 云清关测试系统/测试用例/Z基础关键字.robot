@@ -1,11 +1,12 @@
 *** Settings ***
 Library           Selenium2Library
-Resource          9-9封装按钮关键字.robot
+Resource          X封装按钮关键字.robot
 
 *** Keywords ***
 打开浏览器网址
     [Arguments]    ${browser}
     Open Browser    http://zyd.cds.com    ${browser}
+    Maximize Browser Window
 
 选择登录角色
     [Arguments]    ${role}

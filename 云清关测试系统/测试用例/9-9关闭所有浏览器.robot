@@ -2,8 +2,8 @@
 Library           Selenium2Library
 
 *** Test Cases ***
-等待5秒关闭
-    sleep    5
+等待n秒关闭
+    sleep    30
 
 关闭所有浏览器
     Close All Browsers
