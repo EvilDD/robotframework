@@ -1,12 +1,39 @@
 *** Settings ***
 Resource          Z基础关键字.robot
 Library           Collections
+Library           BuiltIn
 
 *** Keywords ***
-进入报关单页面
+打印预览关键字
+    Wait Until Element Is Enabled    xpath=//div[@class='button']
+    ${printElements}    Get WebelementS    Xpath=//select[@id='printcd']/option
+    ${menuDict}    Create Dictionary
+    :FOR    ${printElement}    IN    @{printElements}
+    \    ${printName}    Get Text    ${printElement}
+    \    Set To Dictionary    ${menuDict}    ${printName}=${printElement}
+    Comment    Log Dictionary    ${menuDict}
+    ${buttonEle}    Get From Dictionary    ${menuDict}    ${buttonName}
+
+验证报关单添加成功
+    Unselect Frame
+    点击报关单
+    Select Frame    Xpath=//iframe[@src="/admin/declaration/list"]
+    Wait Until Element Contains    Xpath=/html/body/div[1]/div/div[2]/div/div[3]/div[1]    1
+    ${ordersMes}    Get Text    Xpath=/html/body/div[1]/div/div[2]/div/div[3]/div[1]
+    ${numbers}    Evaluate    re.findall('\\d+','${ordersMes}')    re
+    ${ordersNum}    Evaluate    int(${numbers[2]})
+    ${preNum}    Evaluate    int(${preNum})+1    #进入报关单记录报关单数+1
+    Should Be Equal As Integers    ${preNum}    ${ordersNum}
+
+进入报关单列表页面
     点击主报关单
     点击报关单
     Select Frame    Xpath=//iframe[@src="/admin/declaration/list"]
+    Wait Until Element Contains    Xpath=/html/body/div[1]/div/div[2]/div/div[3]/div[1]    1
+    ${ordersMes}    Get Text    Xpath=/html/body/div[1]/div/div[2]/div/div[3]/div[1]
+    ${numbers}    Evaluate    re.findall('\\d+','${ordersMes}')    re
+    ${preNum}    Set Variable    ${numbers[2]}
+    Set Suite Variable    ${preNum}
 
 点击新增报关单
     ${element}    页面操作栏    新增
@@ -139,119 +166,119 @@ Library           Collections
     ${seconds}    Set Variable    ${0.5}
     ${e}    页面元素    客户编码
     Input Text    ${e}    Z1111
-    ${e}    页面元素     申报地海关
-    Click Element     ${e}
+    ${e}    页面元素    申报地海关
+    Click Element    ${e}
     Input Text    ${e}    5141
     Press Key    ${e}    \\13
-    ${e}    页面元素     进口
+    ${e}    页面元素    进口
     Click Element    ${e}
     ${e}    页面元素    进出口岸
     Input Text    ${e}    5100
     Press Key    ${e}    \\13
-    ${e}    页面元素     备案号
-    Input Text     ${e}    A12345678910
-    ${e}    页面元素     合同协议号
+    ${e}    页面元素    备案号
+    Input Text    ${e}    A12345678910
+    ${e}    页面元素    合同协议号
     Input Text    ${e}    hetong
-    ${e}    页面元素     进出口日期
+    ${e}    页面元素    进出口日期
     Input Text    ${e}    2017-01-01
     sleep    ${seconds}
     Press Key    ${e}    \\13
-    ${e}    页面元素     收发货人
+    ${e}    页面元素    收发货人
     Input Text    ${e}    4401963EPH
     sleep    ${seconds}
     Press Key    ${e}    \\13
-    ${e}    页面元素     统一社会信用编码
+    ${e}    页面元素    统一社会信用编码
     Input Text    ${e}    TYSHXYBM9123456789
-    Comment    ${e}    页面元素     收发货人名称
-    Comment    Input Text     ${e}     广州晖瑞包装材料有限公司
-    ${e}    页面元素     消费使用单位
-    Input Text    ${e}     4418943145
-     sleep    ${seconds}
+    Comment    ${e}    页面元素    收发货人名称
+    Comment    Input Text    ${e}    广州晖瑞包装材料有限公司
+    ${e}    页面元素    消费使用单位
+    Input Text    ${e}    4418943145
+    sleep    ${seconds}
     Press Key    ${e}    \\13
-    ${e}    页面元素     统一编码
-    Input Text     ${e}     TYBM56789123456789
+    ${e}    页面元素    统一编码
+    Input Text    ${e}    TYBM56789123456789
     Comment    ${e}    页面元素    单位名称
-    Comment    Input Text    ${e}     宏全食品包装（清新）有限公司
-    ${e}    页面元素     运输方式
+    Comment    Input Text    ${e}    宏全食品包装（清新）有限公司
+    ${e}    页面元素    运输方式
     Input Text    ${e}    5
     Press Key    ${e}    \\13
-    ${e}    页面元素     运输工具名称
+    ${e}    页面元素    运输工具名称
     Input Text    ${e}    feiji
-    ${e}    页面元素     航次号
+    ${e}    页面元素    航次号
     Input Text    ${e}    HCH
-    ${e}    页面元素     提运单号
-    Input Text     ${e}     TYDH
-    ${e}    页面元素     监管方式
-    Input Text    ${e}     0110
+    ${e}    页面元素    提运单号
+    Input Text    ${e}    TYDH
+    ${e}    页面元素    监管方式
+    Input Text    ${e}    0110
     Press Key    ${e}    \\13
-    ${e}    页面元素     征免性质
-    Input Text     ${e}     101
+    ${e}    页面元素    征免性质
+    Input Text    ${e}    101
     Press Key    ${e}    \\13
-    ${e}    页面元素     纳税单位
+    ${e}    页面元素    纳税单位
     Input Text    ${e}    NSDW
-    ${e}    页面元素     许可证号
+    ${e}    页面元素    许可证号
     Input Text    ${e}    XKZH
     ${e}    页面元素    启运国
-    Input Text    ${e}     110
+    Input Text    ${e}    110
     Press Key    ${e}    \\13
-    ${e}    页面元素     装货港
-    Input Text    ${e}     105
+    ${e}    页面元素    装货港
+    Input Text    ${e}    105
     Press Key    ${e}    \\13
-    ${e}    页面元素     境内目的地
-    Input Text     ${e}     11053
+    ${e}    页面元素    境内目的地
+    Input Text    ${e}    11053
     Press Key    ${e}    \\13
-    ${e}    页面元素     成交方式
+    ${e}    页面元素    成交方式
     Input Text    ${e}    1
     Press Key    ${e}    \\13
-    ${e}    页面元素     件数
-    Input Text     ${e}    5
-    ${e}    页面元素     包装种类
+    ${e}    页面元素    件数
+    Input Text    ${e}    5
+    ${e}    页面元素    包装种类
     Input Text    ${e}    1
     Press Key    ${e}    \\13
-    ${e}    页面元素     毛重
-    Input Text     ${e}    120
-    ${e}    页面元素     净重
+    ${e}    页面元素    毛重
+    Input Text    ${e}    120
+    ${e}    页面元素    净重
     Input Text    ${e}    12
-    ${e}    页面元素     贸易国
-    Input Text    ${e}     116
+    ${e}    页面元素    贸易国
+    Input Text    ${e}    116
     Press Key    ${e}    \\13
-    ${e}    页面元素     报关单类型
+    ${e}    页面元素    报关单类型
     Input Text    ${e}    M
     Press Key    ${e}    \\13
-    ${e}    页面元素     备注
-    Input Text    ${e}     快件
-    ${e}    页面元素     商品编号
+    ${e}    页面元素    备注
+    Input Text    ${e}    快件
+    ${e}    页面元素    商品编号
     Input Text    ${e}    0102290000
     Press Key    ${e}    \\13
-     0102290000
-    ${e}    页面元素     成交数量
-    Input Text    ${e}    5
-    ${e}    页面元素     成交单位
+    0102290000
+    ${e}    页面元素    成交数量
+    Input Text    ${e}    11
+    ${e}    页面元素    成交单位
     Input Text    ${e}    035
     Press Key    ${e}    \\13
-    ${e}    页面元素     成交总价
+    ${e}    页面元素    成交总价
     Input Text    ${e}    10
     ${e}    页面元素    币制
-    Input Text    ${e}     142
+    Input Text    ${e}    142
     Press Key    ${e}    \\13
-    ${e}    页面元素     法定数量
-    Input Text    ${e}     11
+    ${e}    页面元素    法定数量
+    Input Text    ${e}    11
     ${e}    页面元素    版本号
-    Input Text    ${e}     BANBENHAO
-    ${e}    页面元素     货号
-    Input Text    ${e}     HUOHAO
-    ${e}    页面元素     最终目的国
-    Input Text    ${e}     142
+    Input Text    ${e}    BANBENHAO
+    ${e}    页面元素    货号
+    Input Text    ${e}    HUOHAO
+    ${e}    页面元素    最终目的国
+    Input Text    ${e}    142
     Press Key    ${e}    \\13
-    ${e}    页面元素     原产国
+    ${e}    页面元素    原产国
     Input Text    ${e}    109
     Press Key    ${e}    \\13
-    ${e}    页面元素     征免方式
+    ${e}    页面元素    征免方式
     Input Text    ${e}    3
-    ${e}    页面元素     保存商品
+    ${e}    页面元素    保存商品
     Click Element    ${e}
-    ${e}    页面元素     保存报关单
-    Click Element     ${e}
+    ${e}    页面元素    保存报关单
+    Click Element    ${e}
 
 0102290000
     Wait Until Element Is Enabled    Xpath=//*[@id="datagrid-row-r7-2-0"]    5    查询不到该商品

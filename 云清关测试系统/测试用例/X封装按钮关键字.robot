@@ -22,14 +22,8 @@ Library           Selenium2Library
     : FOR    ${menuElement}    IN    @{menuElements}
     \    ${menuName}    Get Text    ${menuElement}
     \    Set To Dictionary    ${menuDict}    ${menuName}=${menuElement}
-    ${printElements}    Get WebelementS    Xpath=//select[@id='printcd']/option
-    : FOR    ${printElement}    IN    @{printElements}
-    \    ${printName}    Get Text    ${printElement}
-    \    Set To Dictionary    ${menuDict}    ${printName}=${printElement}
-    #Log Dictionary    ${menuDict}
+    Comment    Log Dictionary    ${menuDict}
     ${buttonEle}    Get From Dictionary    ${menuDict}    ${buttonName}
     [Return]    ${buttonEle}
-
-页面搜索栏
 
 页面页码栏
